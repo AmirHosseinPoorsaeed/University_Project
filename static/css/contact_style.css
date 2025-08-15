@@ -1,0 +1,230 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #8b0000, #ff1818, #96d81c);
+    min-height: 100vh;
+    color: white;
+}
+
+header {
+    padding: 0px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo h2 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    position: relative;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+nav a.active {
+    color: #ff0000;
+    font-weight: 600;
+    border-bottom: 2px solid #ff0000;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.social-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.follow-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.social-link {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f1f1f1;
+    color: #333;
+    font-size: 24px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.join-text {
+    font-family: Tahoma, sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+.tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background-color: #333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #333 transparent transparent;
+}
+
+/* Social media hover colors */
+.social-link:nth-child(1):hover {
+    background: rgba(59, 89, 152, 0.2);
+    color: #3b5998;
+}
+.social-link:nth-child(2):hover {
+    background: rgba(225, 48, 108, 0.2);
+    color: #e1306c;
+}
+.social-link:nth-child(3):hover {
+    background: rgba(29, 161, 242, 0.2);
+    color: #1da1f2;
+}
+.social-link:nth-child(4):hover {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+}
+.social-link:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -120%);
+}
+.social-link:hover i {
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 15px;
+    }
+    nav ul {
+        margin-top: 15px;
+        gap: 15px;
+    }
+    .social-links {
+        gap: 15px;
+    }
+}
+
+
+/* User Auth Styles */
+.user-auth {
+    display: flex;
+    align-items: center;
+}
+
+.auth-link {
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: rgba(238, 255, 0, 0.308);
+}
+
+.auth-link:hover {
+    background-color: rgba(24, 33, 161, 0.397);
+}
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-profile i {
+    font-size: 30px;
+    color: white
+}
+
+.profile-text {
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* Add to media query for mobile */
+@media (max-width: 768px) {
+    .auth-link, .user-profile {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+}

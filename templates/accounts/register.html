@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block custom_style %}
+    <link rel="stylesheet" href="{% static 'css/register_style.css' %}">
+{% endblock %}
+
+{% block page_title %}
+    Register
+{% endblock %} 
+
+{% block content %}
+
+<div class="glass-container">
+    <h2>Sign Up</h2>
+        {% for field in user_form %}
+            {% for error in field.errors %}
+                {{ error }}<br>
+            {% endfor %}
+        {% endfor %}
+        <form id="signinForm" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" id="emailOrPhone" name="email" required>
+                <label for="emailOrPhone">Email</label>
+                <span id="countryCode" class="country-code">+98</span>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" required>
+                <label for="password">Enter password</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirmPassword" name="password2" required>
+                <label for="confirmPassword">Confirm password</label>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+
+            <button type="submit" class="login-btn">Sign Up</button>
+            <div class="register-link">
+                <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+            </div>
+        </form>
+    </div>
+{% endblock %}

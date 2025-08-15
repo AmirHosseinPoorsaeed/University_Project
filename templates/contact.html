@@ -1,9 +1,72 @@
 {% extends '_base.html' %}
+{% load static %}
+
+{% block custom_style %}
+    <link rel="stylesheet" href="{% static 'css/contact_style.css' %}">
+{% endblock %}
 
 {% block page_title %}
     Contact
 {% endblock %} 
 
 {% block content %}
-    <h4>Hello Conatct Page</h4>
+    <header>
+        <div class="logo">
+            <h2>Logo</h2>
+        </div>
+        <div class="user-auth">
+            <div class="auth-link" id="authButton">
+                <!-- <span>Login/Sign in</span> -->
+                {% if request.user.is_authenticated %}
+                    <span>Hello {{ request.user.email }}</span>
+                    <span> | </span>
+                    <a class="link-light link-underline-opacity-0" href="{% url 'accounts:logout' %}">Logout</a>
+                {% else %}
+                    <a class="link-light link-underline-opacity-0" href="{% url 'accounts:login' %}">Login</a>
+                {% endif %}
+            </div>
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span class="profile-text">Profile</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Tracking</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#" class="active">Contact us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="social-container">
+            <h2 class="follow-title">Follow us!</h2>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-facebook-f"></i>
+                    <div class="tooltip">Facebook</div>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                    <div class="tooltip">Instagram</div>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-twitter"></i>
+                    <div class="tooltip">Twitter</div>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-youtube"></i>
+                    <div class="tooltip">YouTube</div>
+                </a>
+            </div>
+            
+            <p class="join-text">Join our family to see what came next 🤞💛</p>
+        </div>
+    </div>
 {% endblock %}
