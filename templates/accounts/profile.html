@@ -18,54 +18,62 @@
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Products</a></li>
-                <li><a href="#">Service</a></li>
-                <li><a href="#">Tracking</a></li>
+                <li><a href="#">cart</a></li>
                 <li><a href="#">Gallery</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact us</a></li>
+            </ul>
             </ul>
         </nav>
         <div class="user-profile">
             <i class="fas fa-user-circle"></i>
             <span class="profile-text">Profile</span>
             <div class="profile-dropdown">
-                <a href="{% url 'accounts:logout' %}" id="logoutBtn">Log Out</a>
+                <a href="#" id="logoutBtn">Log Out</a>
             </div>
         </div>
     </header>
 
     <main class="profile-container">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <i class="fas fa-user-circle"></i>
-                <button class="edit-avatar">Edit</button>
-            </div>
-            <h1>User Profile</h1>
-        </div>
-
-        <div class="profile-details">
-            <div class="detail-card">
-                <h3><i class="fas fa-envelope"></i> Email</h3>
-                <p id="userEmail">user@example.com</p>
-                <button class="edit-btn">Edit</button>
+        <form id="profileForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                    <input type="file" id="avatarUpload" name="image" accept="image/*" style="display: none;">
+                    <button type="button" class="edit-avatar" onclick="document.getElementById('avatarUpload').click()">Edit</button>
+                </div>
+                <h1>User Profile</h1>
             </div>
 
-            <div class="detail-card">
-                <h3><i class="fas fa-user"></i> Username</h3>
-                <p id="username">john_doe</p>
-                <button class="edit-btn">Edit</button>
+            <div class="profile-details">
+                <div class="detail-card">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <input type="email" id="userEmail" name="email" value="{{ request.user.email }}" readonly>
+                    <button type="button" class="edit-btn" onclick="enableEditing('userEmail')">Edit</button>
+                </div>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-user"></i> Username</h3>
+                    <input type="text" id="username" name="username" value="{{ request.user.username }}" readonly>
+                    <button type="button" class="edit-btn" onclick="enableEditing('username')">Edit</button>
+                </div>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Member Since</h3>
+                    <p id="joinDate">{{ request.user.date_joined }}</p>
+                </div>
+
+                <div class="detail-card">
+                    <h3><i class="fas fa-shoe-prints"></i> Last Purchased</h3>
+                    <p id="lastPurchase">Nike Air Max - February 5, 2023</p>
+                </div>
             </div>
 
-            <div class="detail-card">
-                <h3><i class="fas fa-calendar-alt"></i> Member Since</h3>
-                <p id="joinDate">January 15, 2023</p>
+            <div class="form-actions">
+                <button type="submit" class="save-btn">Save Changes</button>
             </div>
-
-            <div class="detail-card">
-                <h3><i class="fas fa-shoe-prints"></i> Last Purchased</h3>
-                <p id="lastPurchase">Nike Air Max - February 5, 2023</p>
-            </div>
-        </div>
+        </form>
 
         <div class="social-section">
             <h2>FOLLOW US!</h2>
@@ -88,6 +96,29 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Call with us</h3>
+                <p>Email: benyaminm.p.h@gmail.com</p>
+                <p>Phone: (+98) 9367377088</p>
+                <p>Telegram: @iambeniph</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SportsShoes. All rights reserved.</p>
+        </div>
+    </footer>
 {% endblock %}
 
 {% block custom_js %}

@@ -1,0 +1,183 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block page_title %}
+    Your Cart - Sports Shoes
+{% endblock %}
+
+{% block custom_style %}
+    <link rel="stylesheet" href="{% static 'css/cart_style_1.css' %}">
+{% endblock %}
+
+{% block content %}
+    <header>
+        <div class="logo">
+            <h2>Logo</h2>
+        </div>
+        <div class="user-auth">
+            <div class="auth-link" id="authButton">
+                <span>Login/Sign in</span>
+            </div>
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span class="profile-text">Profile</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#" class="active">cart</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact us</a></li>
+            </ul>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        
+        <div class="cart-content">
+            <section class="cart-items">
+                {% if cart %}
+
+                    {% for item in cart %}
+                        <div class="cart-item" data-product-id="1" data-base-price="10">
+                            <img src="{% static 'images/1.png' %}" alt="Sports Shoe" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h3>{{ item.product_obj.name }}</h3>
+                                <p class="item-color">Color: Red/Black</p>
+                                <p class="item-size">Size: {{ item.size }}</p>
+                                <div class="item-quantity">
+                                    <button id="decrease-quantity" data-product-id="{{ item.product_obj.id }}" data-quantity="-1" class="quantity-btn minus">-</button>
+                                    <span class="quantity">{{ item.quantity }}</span>
+                                    <button id="increase-quantity" data-product-id="{{ item.product_obj.id }}" data-quantity="1" class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-price">
+                                <span class="price">${{ item.price }}</span>
+                                <button id="remove-from-cart-btn" data-product-id="{{ item.product_obj.id }}" class="remove-item"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    <p>cart is empty</p>
+                {% endif %}
+
+            </section>
+
+            <aside class="cart-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>${{ cart.get_total_price }}</span>
+                </div>
+                <!-- <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>$5.00</span>
+                </div> -->
+                <div class="summary-row">
+                    <span>Tax (8%)</span>
+                    <span>${{ cart.get_tax }}</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>${{ cart.get_price_after_tax }}</span>
+                </div>
+                <button class="checkout-btn">Proceed to Checkout</button>
+                <a href="products.html" class="continue-shopping">Continue Shopping</a>
+            </aside>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeFromCartBtn = document.getElementById('remove-from-cart-btn')
+            const increaseQuantityBtn = document.getElementById('increase-quantity')
+            const decreaseQuantityBtn = document.getElementById('decrease-quantity')
+
+            removeFromCartBtn.addEventListener('click', function(){
+                const productId = this.getAttribute('data-product-id');
+
+                fetch('/cart/remove/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        'product_id': productId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Product removed from cart!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+
+            increaseQuantityBtn.addEventListener('click', function(){
+                const quantityStr = this.getAttribute('data-quantity')
+                const productId = this.getAttribute('data-product-id');
+
+                const quantity = parseInt(quantityStr)
+
+                fetch('/cart/add/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        'product_id': productId,
+                        'quantity': quantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Product removed from cart!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+            
+            decreaseQuantityBtn.addEventListener('click', function(){
+                const quantityStr = this.getAttribute('data-quantity')
+                const productId = this.getAttribute('data-product-id');
+
+                const quantity = parseInt(quantityStr)
+
+                fetch('/cart/add/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        'product_id': productId,
+                        'quantity': quantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Product removed from cart!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/cart_script.js' %}"></script>
+{% endblock %}

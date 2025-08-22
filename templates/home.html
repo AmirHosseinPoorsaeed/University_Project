@@ -1,9 +1,160 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block page_title %}
-    Home
+    Sports Shoes - Home
 {% endblock %} 
 
+{% block custom_style %}
+    <link rel="stylesheet" href="{% static 'css/home_style_1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_style_2.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h4>Hello Home Page</h4>
+    <header>
+        <div class="logo">
+            <h2>Logo</h2>
+        </div>
+        <div class="user-auth">
+            <div class="auth-link" id="authButton">
+                <span>Login/Sign in</span>
+            </div>
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span class="profile-text">Profile</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                 <li><a href="{% url 'pages:home' %}" class="active">Home</a></li>
+                <li><a href="{% url 'products:detail' 1 %}">Products</a></li>
+                <li><a href="{% url 'cart:cart_detail' %}">Cart</a></li>
+                <li><a href="{% url 'pages:aboutus' %}">About</a></li>
+                <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Elevate Your Game</h1>
+                <p class="hero-subtitle">Premium sports shoes for maximum performance</p>
+                <a href="products.html" class="hero-button">Shop Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'images/2_EBmmJ5l.png' %}" alt="Premium Sports Shoe">
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-products">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="{% static 'images/1.png' %}" alt="Running Shoe">
+                    <h3>Air Max Pro</h3>
+                    <p class="price">$120.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/2.png' %}" alt="Basketball Shoe">
+                    <h3>Jump Elite</h3>
+                    <p class="price">$135.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="{% static 'images/3.png' %}" alt="Training Shoe">
+                    <h3>Flex Trainer</h3>
+                    <p class="price">$110.00</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner Section -->
+        <section class="banner">
+            <div class="banner-content">
+                <h2>Summer Sale</h2>
+                <p>Up to 40% off on selected items</p>
+                <a href="products.html" class="banner-button">Discover Deals</a>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <div class="category-card running">
+                    <h3>Running</h3>
+                    <a href="products.html?category=running">View Collection</a>
+                </div>
+                <div class="category-card basketball">
+                    <h3>Basketball</h3>
+                    <a href="products.html?category=basketball">View Collection</a>
+                </div>
+                <div class="category-card training">
+                    <h3>Training</h3>
+                    <a href="products.html?category=training">View Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The most comfortable shoes I've ever worn for running!"</p>
+                    <p class="author">- Michael T.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Great traction and support for basketball games."</p>
+                    <p class="author">- Sarah K.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'pages:home' %}">Home</a></li>
+                    <li><a href="{% url 'products:detail' 1 %}">Products</a></li>
+                    <li><a href="{% url 'pages:aboutus' %}" class="active">About</a></li>
+                    <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Call with us</h3>
+                <p>Email: benyaminm.p.h@gmail.com</p>
+                <p>Phone: (+98) 9367377088</p>
+                <p>Telegram: @iambeniph</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SportsShoes. All rights reserved.</p>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/home_script.js' %}"></script>
 {% endblock %}

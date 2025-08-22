@@ -1,67 +1,70 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // در حالت واقعی این اطلاعات از سرور دریافت می‌شود
-    const userData = {
-        email: localStorage.getItem('userEmail') || 'user@example.com',
-        username: localStorage.getItem('username') || 'john_doe',
-        joinDate: localStorage.getItem('joinDate') || 'January 15, 2023',
-        lastPurchase: localStorage.getItem('lastPurchase') || 'Nike Air Max - February 5, 2023'
+    // Enable editing function
+    window.enableEditing = function(fieldId) {
+        const field = document.getElementById(fieldId);
+        field.readOnly = false;
+        field.focus();
+        field.style.borderBottom = '1px solid white';
     };
 
-    // نمایش اطلاعات کاربر
-    document.getElementById('userEmail').textContent = userData.email;
-    document.getElementById('username').textContent = userData.username;
-    document.getElementById('joinDate').textContent = userData.joinDate;
-    document.getElementById('lastPurchase').textContent = userData.lastPurchase;
+    // Avatar upload preview
+    const avatarUpload = document.getElementById('avatarUpload');
+    const avatarIcon = document.querySelector('.profile-avatar i');
+    
+    avatarUpload.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                avatarIcon.style.backgroundImage = `url(${event.target.result})`;
+                avatarIcon.style.backgroundSize = 'cover';
+                avatarIcon.style.backgroundPosition = 'center';
+                avatarIcon.classList.remove('fa-user-circle');
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
 
-    // مدیریت منوی پروفایل
-    const profileDropdown = document.querySelector('.profile-dropdown');
+    // Form submission
+    const profileForm = document.getElementById('profileForm');
+    profileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Here you would typically send the form data to Django backend
+        // For now, we'll just show a success message
+        alert('Profile updated successfully!');
+        
+        // Disable editing after submission
+        const inputs = profileForm.querySelectorAll('input[type="text"], input[type="email"]');
+        inputs.forEach(input => {
+            input.readOnly = true;
+            input.style.borderBottom = '1px solid transparent';
+        });
+    });
+
+    // Logout modal
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutModal = document.getElementById('logoutModal');
     const confirmLogout = document.getElementById('confirmLogout');
     const cancelLogout = document.getElementById('cancelLogout');
 
-    // نمایش مودال خروج
     logoutBtn.addEventListener('click', function(e) {
         e.preventDefault();
         logoutModal.classList.add('active');
     });
 
-    // تایید خروج
     confirmLogout.addEventListener('click', function() {
-        // در حالت واقعی اینجا session پاک می‌شود
-        localStorage.removeItem('isLoggedIn');
-        window.location.href = 'index.html'; // بازگشت به صفحه اصلی
+        // In a real app, this would call Django's logout view
+        window.location.href = '/logout/'; // Django logout URL
     });
 
-    // لغو خروج
     cancelLogout.addEventListener('click', function() {
         logoutModal.classList.remove('active');
     });
 
-    // بستن مودال با کلیک خارج از آن
+    // Close modal when clicking outside
     window.addEventListener('click', function(e) {
         if (e.target === logoutModal) {
             logoutModal.classList.remove('active');
         }
-    });
-
-    // مدیریت دکمه‌های ویرایش
-    const editButtons = document.querySelectorAll('.edit-btn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const card = this.closest('.detail-card');
-            const field = card.querySelector('p');
-            const newValue = prompt('Enter new value:', field.textContent);
-            
-            if (newValue && newValue.trim() !== '') {
-                field.textContent = newValue.trim();
-                // در حالت واقعی اینجا درخواست به سرور ارسال می‌شود
-                if (card.querySelector('h3').textContent.includes('Email')) {
-                    localStorage.setItem('userEmail', newValue.trim());
-                } else if (card.querySelector('h3').textContent.includes('Username')) {
-                    localStorage.setItem('username', newValue.trim());
-                }
-            }
-        });
     });
 });

@@ -1,9 +1,148 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block page_title %}
     About Us
-{% endblock %} 
+{% endblock %}
+
+{% block custom_style %}
+    <link rel="stylesheet" href="{% static 'css/about_style_1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about_style_2.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h4>Hello About Us Page</h4>
+    <header>
+        <div class="logo">
+            <h2>Logo</h2>
+        </div>
+        <div class="user-auth">
+            <div class="auth-link" id="authButton">
+                <span>Login/Sign in</span>
+            </div>
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span class="profile-text">Profile</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'pages:home' %}">Home</a></li>
+                <li><a href="{% url 'products:detail' 1 %}">Products</a></li>
+                <li><a href="{% url 'cart:cart_detail' %}">Cart</a></li>
+                <li><a href="{% url 'pages:aboutus' %}" class="active">About</a></li>
+                <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="about-container">
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="hero-content">
+                <h1>Our Story</h1>
+                <p>Driven by passion, built for performance</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="about-content">
+            <div class="about-text">
+                <h2>Who We Are</h2>
+                <p>Hi I'm Benyamin</p>
+                <p>As a beginner programmer who started seriously in this field in 2022, I’ve been working hard to improve my skills up to now, where I can work with the Django framework for backend development—something I’ve been mastering recently.</p>
+                <p> There’s still so much to learn, but I’ll never back down.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="2">0</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-image">
+                <img src="{% static 'images/photo_2024-02-09_21-40-59.jpg' %}" alt="Our Team">
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Quality</h3>
+                    <p>We use only premium materials and rigorous testing to ensure our shoes meet the highest standards.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Constant research and development to bring you cutting-edge footwear technology.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Passion</h3>
+                    <p>We live and breathe sports, and it shows in every product we create.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="about-testimonials">
+            <h2>What Athletes Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <p>"SportsShoes changed my game completely. The traction and support are unmatched."</p>
+                    <p class="author">- James Wilson, Professional Basketball Player</p>
+                </div>
+                <div class="testimonial">
+                    <p>"As a marathon runner, I trust SportsShoes for all my training and competitions."</p>
+                    <p class="author">- Emma Zhang, Marathon Runner</p>
+                </div>
+                <div class="testimonial">
+                    <p>"The comfort and durability of these shoes are worth every penny."</p>
+                    <p class="author">- David Miller, Fitness Trainer</p>
+                </div>
+                <div class="slider-controls">
+                    <button class="prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'pages:home' %}">Home</a></li>
+                    <li><a href="{% url 'products:detail' 1 %}">Products</a></li>
+                    <li><a href="{% url 'pages:aboutus' %}" class="active">About Us</a></li>
+                    <li><a href="{% url 'pages:contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Call with us</h3>
+                <p>Email: benyaminm.p.h@gmail.com</p>
+                <p>Phone: (+98) 9367377088</p>
+                <p>Telegram: @iambeniph</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SportsShoes. All rights reserved.</p>
+        </div>
+    </footer>
+    
+{% endblock %}
+
+
+{% block custom_js %}
+    <script src="{% static 'js/about_script.js' %}"></script>
 {% endblock %}

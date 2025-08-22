@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
-from accounts.forms import UserLoginForm, UserRegistrationForm
+from accounts.forms import UserLoginForm, UserProfileForm, UserRegistrationForm, UserUpdateForm
 
 
 def user_login(request):
@@ -64,4 +66,44 @@ def user_logout(request):
 
 
 def user_profile(request):
-    return render(request, 'accounts/profile.html')
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = UserProfileForm(instance=request.user.profile)
+
+    if request.method == 'POST':
+        u_form = UserUpdateForm(
+            request.POST,
+            instance=request.user
+        )
+        p_form = UserProfileForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile
+        )
+
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('accounts:profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = UserProfileForm(instance=request.user.profile)
+
+    return render(request, 'accounts/profile.html', {
+        'u_form': u_form,
+        'p_form': p_form
+    })
+
+
+def user_change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('accounts:login')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })
